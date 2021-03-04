@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "dfx": "0.6.24",
+  "canisters": {
+    "PaymentChannel": {
+      "type": "motoko",
+      "main": "src/Main.mo"
+    },
+    "Token": {
+      "type": "motoko",
+      "main": "vendor/motoko-token/app/Token.mo"
+    }
+  },
+  "defaults": {
+    "build": {
+      "packtool": ""
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  }
+}

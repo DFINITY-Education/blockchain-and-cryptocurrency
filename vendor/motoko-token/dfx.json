@@ -1,0 +1,10 @@
+{
+  "canisters": {
+    "Token": {
+      "main": "app/Token.mo"
+    },
+    "WhoAmI": {
+      "main": "app/WhoAmI.mo"
+    }
+  }
+}
