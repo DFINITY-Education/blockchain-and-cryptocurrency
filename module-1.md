@@ -34,7 +34,7 @@ Finally, blockchains use a **distributed system** to mange blockchain verificati
 
 In the case of Bitcoin, we "trust" whichever ledger has the most about of verifiable work put into it, which comes from the proof-of-work step. Additionally, Bitcoin rewards the block creator, called a **miner**, with a small amount of Bitcoin to incentivize this computationally-intensive process. For example, if there are two conflicting blockchains, nodes choose the longest one because it required the most work to verify; ties are resolved by waiting until one of the conflicting chains becomes longer than the other. Blocks not included in the main chain are called **orphan blocks**. If every node follows these predetermined rules, called a **protocol**, we have a clear way of arriving at decentralized consensus of the blockchain.
 
-<p align="center"><img src="images/Blockchain.svg"/></p>
+<p align="center"><img src="images/blockchain.png" style="zoom:15%;"/></p>
 
 <p align="center"> <i>Blockchain formation from genesis block (green). The longest series of blocks constitutes the main chain (black), and orphan blocks (purple) branch off the main chain. Source: <a href="https://en.wikipedia.org/wiki/Blockchain">Blockchain Wiki</a></i></p>
 
