@@ -9,6 +9,10 @@
     "Token": {
       "type": "motoko",
       "main": "vendor/motoko-token/app/Token.mo"
+    },
+    "User": {
+      "type": "motoko",
+      "main": "src/User.mo"
     }
   },
   "defaults": {

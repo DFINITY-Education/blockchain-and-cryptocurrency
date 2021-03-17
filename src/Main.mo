@@ -18,12 +18,12 @@ actor {
     type Result = Result.Result<(), Error>;
     type Error = Types.Error;
 
-    let paymentChannels = Hashmap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
+    private stable let paymentChannels = Hashmap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
 
     public shared(msg) func setup(counterparty : Principal, amount: Nat) : async Result {
         if ((await Token.balanceOf(msg.caller)) < amount) return Err(#insufficientBalance);
 
-        let key = genKey(party, counterparty);
+        let key = genKey(msg.caller, counterparty);
         switch (paymentChannels.get(key)) {
             case(?_) Err(#paymentChannelAlreadyExists);
             case(null) {
@@ -41,7 +41,7 @@ actor {
     };
 
     public shared(msg) func addFunds(counterparty : Principal, amount: Nat) : async Result {
-        let key = genKey(party, counterparty);
+        let key = genKey(msg.caller, counterparty);
         switch (paymentChannels.get(key)) {
             case(?pc) {
                 if (pc.closing) return #err(#paymentChannelClosing);
@@ -78,21 +78,21 @@ actor {
         tx : Tx,
         signedAttestation : Hash
     ) : async Result {
-        let key = genKey(party, counterparty);
+        let key = genKey(msg.caller, counterparty);
         switch (paymentChannels.get(key)) {
             case(?pc) {
                 if (pc.closing) return #err(#paymentChannelClosing);
                 if (tx.amount > pc.amountA + pc.amountB) return #err(#invalidTx);
 
                 paymentChannels.put(key, PaymentChannel {
-                        userA = pc.userA;
-                        userB = pc.userB;
-                        amountA = pc.amountA;
-                        amountB = pc.amountB + amount;
-                        closing = true;
-                        closingUser = Some(msg.caller);
-                        ttl = Time.now() + (3600 * 1000_000);
-                    });
+                    userA = pc.userA;
+                    userB = pc.userB;
+                    amountA = pc.amountA;
+                    amountB = pc.amountB + amount;
+                    closing = true;
+                    closingUser = Some(msg.caller);
+                    ttl = Time.now() + (3600 * 1000_000);
+                });
 
                 #ok(())
             };
@@ -100,8 +100,8 @@ actor {
         }
     };
 
-    public shared(msg) func finalizeClosingChannel() : async Result {
-        let key = genKey(party, counterparty);
+    public shared(msg) func finalizeClosingChannel(counterparty : Principal) : async Result {
+        let key = genKey(msg.caller, counterparty);
         switch (paymentChannels.get(key)) {
             case(?pc) {
                 if (not pc.closing) return #err(#paymentChannelNotClosing);
