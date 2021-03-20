@@ -9,13 +9,13 @@
 import Array "mo:base/Array";
 import AssocList "mo:base/AssocList";
 import Error "mo:base/Error";
-import Hex "../vendor/motoko-hex/src/Hex";
+import Hex "../src/Hex";
 import List "mo:base/List";
 import Option "mo:base/Option";
 import Prim "mo:prim";
 import Util "../src/Util";
 
-actor Token {
+shared(msg) actor class Token() {
 
   /** 
    * Types
@@ -35,7 +35,7 @@ actor Token {
    */
 
   // The initializer of this canister.
-  private let initializer : Principal = Prim.caller();
+  private let initializer = msg.caller;
 
   // The total token supply.
   private let N : Nat = 1000000000;
@@ -49,9 +49,7 @@ actor Token {
     List.nil<(OwnerBytes, AssocList<OwnerBytes, Nat>)>();
 
   // Allows the given `spender` to spend `amount` tokens on behalf ot function caller
-  public shared {
-    caller = caller;
-  } func approve(spender : Owner, amount : Nat) : async Bool {
+  public shared ({caller = caller}) func approve(spender : Owner, amount : Nat) : async Bool {
     switch (Hex.decode(spender)) {
       case (#ok spenderBytes) {
         let ownerBytes = Util.unpack(caller);
@@ -95,9 +93,11 @@ actor Token {
 
   // Transfers `amount` tokens from `owner` to `to`. Function caller should have permission to do so.
   // See function 'approve'.
-  public shared {
-    caller = caller;
-  } func transferFrom(owner : Owner, to : Owner, amount : Nat) : async Bool {
+  public shared ({caller = caller}) func transferFrom(
+    owner : Owner,
+    to : Owner,
+    amount : Nat
+  ) : async Bool {
     let spenderBytes : OwnerBytes = Util.unpack(caller);
     let allowedAmount = await allowance(owner, Hex.encode(spenderBytes));
     if (allowedAmount < amount) {
@@ -206,9 +206,7 @@ actor Token {
   };
 
   // Transfers tokens to another token owner.
-  public shared {
-    caller = caller;
-  } func transfer(to : Owner, amount : Nat) : async Bool {
+  public shared ({caller = caller}) func transfer(to : Owner, amount : Nat) : async Bool {
     switch (Hex.decode(to)) {
       case (#ok receiver) {
         let sender = Util.unpack(caller);

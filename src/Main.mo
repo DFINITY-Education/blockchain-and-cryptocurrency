@@ -1,5 +1,5 @@
 import Hash "mo:base/Hash";
-import Hashmap "mo:base/Hashmap";
+import HashMap "mo:base/HashMap";
 import Option "mo:base/Option";
 import P "mo:base/Prelude";
 import Principal "mo:base/Principal";
@@ -18,7 +18,7 @@ actor {
     type Result = Result.Result<(), Error>;
     type Error = Types.Error;
 
-    private stable let paymentChannels = Hashmap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
+    private stable let paymentChannels = HashMap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
 
     public shared(msg) func setup(counterparty : Principal, amount: Nat) : async Result {
         if ((await Token.balanceOf(msg.caller)) < amount) return Err(#insufficientBalance);
@@ -33,7 +33,7 @@ actor {
                     amountA = amount;
                     amountB = 0;
                     closing = false;
-                    closingUser = None;
+                    closingUser = null;
                     ttl = 0;
                 })
             };
@@ -90,7 +90,7 @@ actor {
                     amountA = pc.amountA;
                     amountB = pc.amountB + amount;
                     closing = true;
-                    closingUser = Some(msg.caller);
+                    closingUser = ?msg.caller;
                     ttl = Time.now() + (3600 * 1000_000);
                 });
 

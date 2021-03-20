@@ -1,14 +1,12 @@
-
-
 module {
-    
+
     public type PaymentChannel = {
         userA: Principal;
         userB: Principal;
         amountA: Nat;
         amountB: Nat;
         closing: Bool;
-        closingUser: Option<Principal>;
+        closingUser: ?Principal;
         ttl: Nat;
     };
 
@@ -18,7 +16,7 @@ module {
         amount: Nat;
     };
 
-    public type = Error = {
+    public type Error = {
         #invalidTx;
         #invalidFinalize;
         #paymentChannelDoesNotExist;
