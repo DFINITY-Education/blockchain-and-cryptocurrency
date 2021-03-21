@@ -1,9 +1,9 @@
 # Table of Contents
 
 * [Module 1: Introduction to Blockchains](module-1.md)
-* [Module 2: Playing Around with a Token Implementation](module-2.md)
-* [Module 3: Playing with Payment Channels](module-3.md)
-* [Module 4: Publishing Payment Channel Hashes On-Chainf4](module-4.md)
+* [Module 2: Understanding Tokens](module-2.md)
+* [Module 3: Implementing Payment Channels](module-3.md)
+* [Module 4: More Payment Channels & Off-Chain Transactions](module-4.md)
 
 # About
 
