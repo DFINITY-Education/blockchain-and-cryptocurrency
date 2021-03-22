@@ -18,7 +18,7 @@ Next, Alice and Bob conduct a series of transactions back and forth without publ
 
 <p align="center"><img src="images/payment_channels.png" style="zoom:15%;"/></p>
 
-<p align="center"> <i> Only two trasactions, the first and the last, are published to the chain. Source: <a href="https://medium.com/@happypeter1983/payment-channels-9181941b83e4">happypeter on Medium</a></i></p>
+<p align="center"> <i> Only two transactions, the first and the last, are published to the chain. Source: <a href="https://medium.com/@happypeter1983/payment-channels-9181941b83e4">happypeter on Medium</a></i></p>
 
 However, having to open up a new payment channel for each person you want to transact with is quite inefficient. Fortunately,  some payment channel implementations, such as Bitcoin's [Lightning Network](https://en.wikipedia.org/wiki/Lightning_Network), incorporate a mesh network of payment channels that connect users to everyone else in the network. Now, to transact with a new person, you can send funds through someone you already have an existing channel open with as long as there is a "path" of channels leading to the recipient. We can visualize this relationship as a graph, where users are the nodes and open payment channels are edges.
 
@@ -48,13 +48,13 @@ The `Tx` type stores information about the final transaction that is registered 
 
 #### `vendor/motoko-token`
 
-This is where the ERC-20 style token that we discussed in Module 2 is implemented. Make sure you have a clear understanding of how this Token operates, discusses in Module 2, before proceeding with this activity. You will call several of the Token's methods in this activity.
+This is where the ERC-20 style token that we discussed in Module 2 is implemented. Make sure you have a clear understanding of how this Token operates, discussed in Module 2, before proceeding with this activity. You will call several of the Token's methods in this activity.
 
 **Big Idea:** One method that is especially important for this module is `approve`, which allows the given `spender` to spend `amount` tokens on behalf of the function caller. In order for two users to open a payment channel with each other, they first must `approve` the payment channel canister to "spend" tokens on their behalf. Checking that users have done this before opening up a new channel in something that you must verify in the `setup()` method.  
 
 #### `Main.mo`
 
-`paymentChannels` is a hash map that stores all of the open payment channels. We identify a payment channel between two users via a `hash` derived from their user IDs (implemented by `genKey()`). Note that any pair of two unique users can only have one open payment channel with each other, but they may have any many open channels as desired with other distinct users.
+`paymentChannels` is a hash map that stores all of the open payment channels. We identify a payment channel between two users via a `hash` derived from their user IDs (implemented by `genKey()`). Note that any pair of two unique users can only have one open payment channel with each other, but they may have as many open channels as desired with other distinct users.
 
 `genKey()` accepts two users and creates a `hash` from their user IDs. Make sure you understand how we ensure that invoking this method always returns the same hash for two users regardless of which is the `party` and the `counterparty` (i.e. `genKey(Alice, Bob) == genKey(Bob, Alice)`).
 
