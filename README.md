@@ -8,3 +8,9 @@
 # About
 
 In this course, students will learn ...
+
+# Content Creation
+The provided content was developed in collaboration with the following students:
+
+- [Nick Zoghb](https://www.linkedin.com/in/nickzoghb/), a graduate of University of California, Berkeley (2018) with a focus on Computer Science and Bioengineering
+- [Connor Solimano](https://www.linkedin.com/in/connor-solimano/), a student at Harvard College (2022) pursuing a degree in Computer Science and Economics
