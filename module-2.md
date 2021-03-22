@@ -1,4 +1,4 @@
-# Module 2: Understanding Token Usage
+# Module 2: Understanding Tokens
 
 Modules 2-4 all make use of an **ERC-20** style token, which has already been implemented for you. In this module, you will experiment with this token on the IC by simulating activities such as minting your own token, transferring funds to other users, and leveraging account allowances.
 
@@ -93,5 +93,7 @@ Follow these steps to deploy your canisters and launch the front end. If you run
    dfx deploy
    ```
 
+### Experimenting
 
+Next, let's call some of the Token methods via the CLI. If you need a refresher on calling functions that require arguments, see this [DFINITY SDK](https://sdk.dfinity.org/docs/developers-guide/tutorials/hello-location.html) guide.
 

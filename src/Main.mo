@@ -21,7 +21,7 @@ actor {
     private stable let paymentChannels = HashMap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
 
     public shared(msg) func setup(counterparty : Principal, amount: Nat) : async Result {
-        if ((await Token.balanceOf(msg.caller)) < amount) return Err(#insufficientBalance);
+        if ((await Token.balanRowceOf(msg.caller)) < amount) return Err(#insufficientBalance);
 
         let key = genKey(msg.caller, counterparty);
         switch (paymentChannels.get(key)) {
