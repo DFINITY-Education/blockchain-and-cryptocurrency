@@ -7,7 +7,7 @@
 
 # About
 
-In this course, students will learn ...
+In this course, students will learn about the fundamentals of blockchain technology as well as the cryptocurrencies built on top of it. Module 1 serves as an intro to the concept of blockchains, cryptocurrencies, limitations of these services, and payment channels. Module 2 explains tokens and gives students the opportunity to experiment with an ERC-20 style token built on Motoko. In Module 3 students begin their own implementation of a payment channel in Motoko, and in Module 4 they finish this implemation. Each module builds upon concepts learned and activities accomplished in the prior modules. 
 
 # Content Creation
 The provided content was developed in collaboration with the following students:
