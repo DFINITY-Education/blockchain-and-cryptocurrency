@@ -18,9 +18,9 @@ actor class PaymentChannelClass(Token : Types.Token) {
     type Tx = Types.Tx;
 
     // remove me
-    private func Err<T>(error : Error) : Result = { #err: error };
+    private func Err<T>(error : Error) : Result { #err(error) };
 
-    private stable let paymentChannels = HashMap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
+    private stable let paymentChannels = HashMap.HashMap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
 
     public shared(msg) func setup(counterparty : Principal, amount: Nat) : async Result {
         if ((await Token.balanceOf(msg.caller)) < amount) return Err(#insufficientBalance);
