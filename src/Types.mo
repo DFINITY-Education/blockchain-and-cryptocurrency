@@ -19,10 +19,23 @@ module {
     public type Error = {
         #invalidTx;
         #invalidFinalize;
+	#paymentChannelAlreadyExists;
         #paymentChannelDoesNotExist;
         #paymentChannelClosing;
         #paymentChannelNotClosing;
         #transferFailed;
     };
 
+    public type Owner = Text;
+    public type Token = actor {
+      allowance: shared query (Owner, Owner) -> async Nat;
+      approve:  (Owner, Nat) -> async Bool;
+      balanceOf: shared query (Owner) -> async ?Nat;
+      name: shared query () -> async Text;
+      symbol: shared query () -> async Text;
+      totalSupply: shared query () -> async Nat;
+      transfer: (Owner, Nat) -> async Bool;
+      transferFrom: shared (Owner, Owner, Nat) -> async Bool;
+   };
 };
+
