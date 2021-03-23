@@ -21,7 +21,7 @@ The main difference between fungible tokens and cryptocurrencies is that cryptoc
 
 ### ERC-20 Methods
 
-The ERC-20 token standard includes several required methods that all tokens must implement, which provide functionality for checking the total number of tokens in circulation, transferring/checking balances, and establishing a spending allowance for a tired-party account. See the ERC-20 [spec](https://eips.ethereum.org/EIPS/eip-20) for more specific information regarding these methods. 
+The ERC-20 token standard includes several required methods that all tokens must implement, which provide functionality for checking the total number of tokens in circulation, transferring/checking balances, and establishing a spending allowance for a third-party account. See the ERC-20 [spec](https://eips.ethereum.org/EIPS/eip-20) for more specific information regarding these methods. 
 
 ```javascript
 // Optional Methods //

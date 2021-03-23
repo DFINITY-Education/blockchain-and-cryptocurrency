@@ -6,22 +6,24 @@ import Principal "mo:base/Principal";
 import Result "mo:base/Result";
 import Time "mo:base/Time";
 
-import Token "canister:Token";
-
 import Types "./Types";
 
-actor {
+actor class PaymentChannelClass(Token : Types.Token) {
 
     type Hash = Hash.Hash;
 
     type PaymentChannel = Types.PaymentChannel;
     type Result = Result.Result<(), Error>;
     type Error = Types.Error;
+    type Tx = Types.Tx;
 
-    private stable let paymentChannels = HashMap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
+    // remove me
+    private func Err<T>(error : Error) : Result { #err(error) };
+
+    private stable let paymentChannels = HashMap.HashMap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
 
     public shared(msg) func setup(counterparty : Principal, amount: Nat) : async Result {
-        if ((await Token.balanRowceOf(msg.caller)) < amount) return Err(#insufficientBalance);
+        if ((await Token.balanceOf(msg.caller)) < amount) return Err(#insufficientBalance);
 
         let key = genKey(msg.caller, counterparty);
         switch (paymentChannels.get(key)) {
@@ -96,7 +98,7 @@ actor {
 
                 #ok(())
             };
-            case(null) Err(#paymentDoesNotExist);
+            case(null) Err(#paymentChannelDoesNotExist);
         }
     };
 
