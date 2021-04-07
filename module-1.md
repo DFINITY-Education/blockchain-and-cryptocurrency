@@ -18,7 +18,7 @@ A **blockchain** is a list of records, often referred to as a ledger, that utili
 2. **Hash:** A block's *hash* is a unique string of characters used to identify and distinguish it from other blocks.
 3. **Hash of Previous Block:** Blocks also store the hash of the previous block, creating the so-called "blockchain." Think of the blockchain as akin to a linked-list data structure (albeit with some significant differences, which we will discuss). 
 
-<p align="center"><img src="https://miro.medium.com/max/977/1*mNdCyhj2WRSzmgTOVztaUg.png" style="zoom:75%;"/> </p>
+<p align="center"><img src="https://miro.medium.com/max/977/1*mNdCyhj2WRSzmgTOVztaUg.png" height="300"/> </p>
 
 <p align="center"> <i>Source: <a href="https://medium.com/swlh/blockchain-characteristics-and-its-suitability-as-a-technical-solution-bd65fc2c1ad1">Venkat Kasthala, Medium</a></i></p>
 
@@ -34,7 +34,7 @@ Finally, blockchains use a **distributed system** to manage blockchain verificat
 
 In the case of Bitcoin, we "trust" whichever ledger has the most about of verifiable work put into it, which comes from the proof-of-work step. Additionally, Bitcoin rewards the block creator, called a **miner**, with a small amount of Bitcoin to incentivize this computationally-intensive process. For example, if there are two conflicting blockchains, nodes choose the longest one because it required the most work to verify; ties are resolved by waiting until one of the conflicting chains becomes longer than the other. Blocks not included in the main chain are called **orphan blocks**. If every node follows these predetermined rules, called a **protocol**, we have a clear way of arriving at decentralized consensus of the blockchain.
 
-<p align="center"><img src="images/blockchain.png" style="zoom:15%;"/></p>
+<p align="center"><img src="images/blockchain.png" width="100"/></p>
 
 <p align="center"> <i>Blockchain formation from genesis block (green). The longest series of blocks constitutes the main chain (black), and orphan blocks (purple) branch off the main chain. Source: <a href="https://en.wikipedia.org/wiki/Blockchain">Blockchain Wiki</a></i></p>
 
