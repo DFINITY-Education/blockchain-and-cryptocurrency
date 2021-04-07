@@ -16,7 +16,7 @@ Let's image that Alice and Bob are two users that plan on transacting often enou
 
 Next, Alice and Bob conduct a series of transactions back and forth without publishing them to the chain. Note, however, that these transactions simply modify a IOU ledger showing who owes whom money. At no point in these transactions do either party exchange actual cryptocurrency on the chain. Finally, when Alice and Bob want to "settle-up," they tally their transactions and determine who should pay whom. This final transaction "closes" the payment channel and is logged on the chain.
 
-<p align="center"><img src="images/payment_channels.png" style="zoom:15%;"/></p>
+<p align="center"><img src="images/payment_channels.png" height="300"/></p>
 
 <p align="center"> <i> Only two transactions, the first and the last, are published to the chain. Source: <a href="https://medium.com/@happypeter1983/payment-channels-9181941b83e4">happypeter on Medium</a></i></p>
 
