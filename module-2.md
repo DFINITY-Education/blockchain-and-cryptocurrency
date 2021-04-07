@@ -2,10 +2,6 @@
 
 Modules 2-4 all make use of an **ERC-20** style token, which has already been implemented for you. In this module, you will experiment with this token on the IC by simulating activities such as minting your own token, transferring funds to other users, and leveraging account allowances.
 
-```bash
-
-```
-
 ## Understanding
 
 Blockchain-based **tokens** are digital units of value similar to fiat currencies. They are built on top of existing blockchains, which verify the total supply, transfer, and ownership of these tokens. A token can represent anything of value - ranging from financial assets to reputation points in a digital platform - and, as such, could potentially take on many different forms and variations.
