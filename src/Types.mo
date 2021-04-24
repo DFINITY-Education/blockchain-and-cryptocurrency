@@ -1,3 +1,5 @@
+import Time "mo:base/Time";
+
 module {
 
     public type PaymentChannel = {
@@ -7,7 +9,7 @@ module {
         amountB: Nat;
         closing: Bool;
         closingUser: ?Principal;
-        ttl: Nat;
+        ttl: Time.Time;
     };
 
     public type Tx = {
@@ -19,7 +21,8 @@ module {
     public type Error = {
         #invalidTx;
         #invalidFinalize;
-	#paymentChannelAlreadyExists;
+        #insufficientBalance;
+	    #paymentChannelAlreadyExists;
         #paymentChannelDoesNotExist;
         #paymentChannelClosing;
         #paymentChannelNotClosing;

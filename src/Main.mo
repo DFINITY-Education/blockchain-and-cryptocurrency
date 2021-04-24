@@ -4,40 +4,49 @@ import Option "mo:base/Option";
 import P "mo:base/Prelude";
 import Principal "mo:base/Principal";
 import Result "mo:base/Result";
+import Text "mo:base/Text";
 import Time "mo:base/Time";
 
 import Types "./Types";
 
-actor class PaymentChannelClass(Token : Types.Token) {
+actor class PaymentChannelClass(Token : Types.Token) = PC {
 
     type Hash = Hash.Hash;
 
+    type Error = Types.Error;
     type PaymentChannel = Types.PaymentChannel;
     type Result = Result.Result<(), Error>;
-    type Error = Types.Error;
     type Tx = Types.Tx;
 
-    // remove me
-    private func Err<T>(error : Error) : Result { #err(error) };
-
-    private stable let paymentChannels = HashMap.HashMap<Hash, PaymentChannel>(1, Principal.equal, Principal.hash);
+    private let paymentChannels = HashMap.HashMap<Text, PaymentChannel>(1, Text.equal, Text.hash);
 
     public shared(msg) func setup(counterparty : Principal, amount: Nat) : async Result {
-        if ((await Token.balanceOf(msg.caller)) < amount) return Err(#insufficientBalance);
+        switch (await Token.balanceOf(Principal.toText(msg.caller))) {
+            case (?balance) {
+                if (balance < amount) return #err(#insufficientBalance);
+            };
+            case (null) return #err(#insufficientBalance);
+        };
 
         let key = genKey(msg.caller, counterparty);
         switch (paymentChannels.get(key)) {
-            case(?_) Err(#paymentChannelAlreadyExists);
+            case(?_) #err(#paymentChannelAlreadyExists);
             case(null) {
-                paymentChannels.put(key, PaymentChannel {
-                    userA = party;
+                paymentChannels.put(key, {
+                    userA = msg.caller;
                     userB = counterparty;
                     amountA = amount;
                     amountB = 0;
                     closing = false;
                     closingUser = null;
                     ttl = 0;
-                })
+                });
+
+                if (not (await Token.transferFrom(Principal.toText(msg.caller), Principal.toText(Principal.fromActor(PC)), amount))) {
+                    return #err(#transferFailed);
+                };
+
+                #ok(())
             };
         }
     };
@@ -48,7 +57,7 @@ actor class PaymentChannelClass(Token : Types.Token) {
             case(?pc) {
                 if (pc.closing) return #err(#paymentChannelClosing);
                 if (msg.caller == pc.userA) {
-                    paymentChannels.put(key, PaymentChannel {
+                    paymentChannels.put(key, {
                         userA = pc.userA;
                         userB = pc.userB;
                         amountA = pc.amountA + amount;
@@ -58,7 +67,7 @@ actor class PaymentChannelClass(Token : Types.Token) {
                         ttl = pc.ttl;
                     });
                 } else {
-                    paymentChannels.put(key, PaymentChannel {
+                    paymentChannels.put(key, {
                         userA = pc.userA;
                         userB = pc.userB;
                         amountA = pc.amountA;
@@ -86,19 +95,31 @@ actor class PaymentChannelClass(Token : Types.Token) {
                 if (pc.closing) return #err(#paymentChannelClosing);
                 if (tx.amount > pc.amountA + pc.amountB) return #err(#invalidTx);
 
-                paymentChannels.put(key, PaymentChannel {
-                    userA = pc.userA;
-                    userB = pc.userB;
-                    amountA = pc.amountA;
-                    amountB = pc.amountB + amount;
-                    closing = true;
-                    closingUser = ?msg.caller;
-                    ttl = Time.now() + (3600 * 1000_000);
-                });
+                if (tx.sender == pc.userA) {
+                    paymentChannels.put(key, {
+                        userA = pc.userA;
+                        userB = pc.userB;
+                        amountA = pc.amountA - tx.amount;
+                        amountB = pc.amountB + tx.amount;
+                        closing = true;
+                        closingUser = ?msg.caller;
+                        ttl = Time.now() + (3600 * 1000_000);
+                    });
+                } else {
+                    paymentChannels.put(key, {
+                        userA = pc.userA;
+                        userB = pc.userB ;
+                        amountA = pc.amountA - tx.amount;
+                        amountB = pc.amountB + tx.amount;
+                        closing = true;
+                        closingUser = ?msg.caller;
+                        ttl = Time.now() + (3600 * 1000_000);
+                    });
+                };
 
                 #ok(())
             };
-            case(null) Err(#paymentChannelDoesNotExist);
+            case(null) #err(#paymentChannelDoesNotExist);
         }
     };
 
@@ -112,7 +133,12 @@ actor class PaymentChannelClass(Token : Types.Token) {
                 };
 
                 paymentChannels.delete(key);
-                if (not (await Token.transferFrom(tx.sender, tx.receiver, tx.amount))) return #err(#transferFailed);
+                if (not (await Token.transferFrom(Principal.toText(Principal.fromActor(PC)), Principal.toText(pc.userA), pc.amountA))) {
+                    return #err(#transferFailed);
+                };
+                if (not (await Token.transferFrom(Principal.toText(Principal.fromActor(PC)), Principal.toText(pc.userB), pc.amountB))) {
+                    return #err(#transferFailed);
+                };
 
                 #ok(())
             };
@@ -120,12 +146,12 @@ actor class PaymentChannelClass(Token : Types.Token) {
         }
     };
 
-    func genKey(party: Principal, counterparty: Principal) : Hash {
+    func genKey(party: Principal, counterparty: Principal) : Text {
         let partyText = Principal.toText(party);
         let counterpartyText = Principal.toText(counterparty);
         switch (Principal.compare(party, counterparty)) {
-            case(#less) Text.hash(partyText # counterpartyText);
-            case(#greater) Text.hash(counterpartyText # partyText);
+            case(#less) partyText # counterpartyText;
+            case(#greater) counterpartyText # partyText;
             case(_) P.unreachable();
         }
     };
