@@ -12,9 +12,9 @@ To avoid these throughput and fee issues, we introduce the notion of **payment c
 
 ### Example: Alice and Bob
 
-Let's image that Alice and Bob are two users that plan on transacting often enough with each other that they run into the throughput and fee issues we outlined above. Alice and Bob decide to open up a payment channel, which initially requires that they each put a set amount of funds aside for use in the payment channel. These funds are held in escrow until both parties decide to close the channel. When the channel is initially opened, this transaction is logged on the chain.
+Let's imagine that Alice and Bob are two users that plan on transacting often enough with each other that they run into the throughput and fee issues we outlined above. Alice and Bob decide to open up a payment channel, which initially requires that they each put a set amount of funds aside for use in the payment channel. These funds are held in escrow until both parties decide to close the channel. When the channel is initially opened, this transaction is logged on the chain.
 
-Next, Alice and Bob conduct a series of transactions back and forth without publishing them to the chain. Note, however, that these transactions simply modify a IOU ledger showing who owes whom money. At no point in these transactions do either party exchange actual cryptocurrency on the chain. Finally, when Alice and Bob want to "settle-up," they tally their transactions and determine who should pay whom. This final transaction "closes" the payment channel and is logged on the chain.
+Next, Alice and Bob conduct a series of transactions back and forth without publishing them to the chain. Note, however, that these transactions simply modify an IOU ledger showing who owes whom money. At no point in these transactions do either party exchange actual cryptocurrency on the chain. Finally, when Alice and Bob want to "settle-up," they tally their transactions and determine who should pay whom. This final transaction "closes" the payment channel and is logged on the chain.
 
 <p align="center"><img src="images/payment_channels.png" height="300"/></p>
 
@@ -50,7 +50,7 @@ The `Tx` type stores information about the final transaction that is registered 
 
 This is where the ERC-20 style token that we discussed in Module 2 is implemented. Make sure you have a clear understanding of how this Token operates, discussed in Module 2, before proceeding with this activity. You will call several of the Token's methods in this activity.
 
-**Big Idea:** One method that is especially important for this module is `approve`, which allows the given `spender` to spend `amount` tokens on behalf of the function caller. In order for two users to open a payment channel with each other, they first must `approve` the payment channel canister to "spend" tokens on their behalf. Checking that users have done this before opening up a new channel in something that you must verify in the `setup()` method.  
+**Big Idea:** One method that is especially important for this module is `approve`, which allows the given `spender` to spend `amount` tokens on behalf of the function caller. In order for two users to open a payment channel with each other, they first must `approve` the payment channel canister to "spend" tokens on their behalf. Checking that users have done this before opening up a new channel is something that you must verify in the `setup()` method.  
 
 #### `Main.mo`
 
@@ -75,12 +75,7 @@ This is a "dummy" canister that you can use to open a payment channel with. You 
 
 **`addFunds`** adds `amount` to the method caller's balance in the `PaymentChannel` associated between the caller and `counterparty`.
 
-* As you did in the beginning of `setup()`, (1) ensure that the caller of this method has `amount` available in their token wallet and (2) remove `amount` of funds from the user calling this method
+* As you did at the beginning of `setup()`, (1) ensure that the caller of this method has `amount` available in their token wallet and (2) remove `amount` of funds from the user calling this method
 * When you check for the payment channel in `paymentChannels`, ensure that it is not currently in the process of `closing`. If so, return the `#paymentChannelClosing` error. 
 * Check if the caller is `userA` or `userB` in the `PaymentChannel` and add `amount` to the corresponding field (`amountA`/`amountB`)
 * If the payment channel doesn't exist, return the `#paymentChannelDoesNotExist` error
-
-
-
-
-
