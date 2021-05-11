@@ -4,7 +4,7 @@ In this module, you will continue your implementation of the payment channel by 
 
 ## Understanding
 
-Remember that, due to the off-chain nature of payment channels, none of the transactions actually result in balance changes for either user (other than the funds locked in escrow). If Alice pays Bob through a payment channel, Bob's balance doesn't increased until both parties decide to "close" the payment channel. At the time of the payment channel closing, all prior transactions are tallied and one final transaction representing their sum is committed to the blockchain.
+Remember that, due to the off-chain nature of payment channels, none of the transactions actually result in balance changes for either user (other than the funds locked in escrow). If Alice pays Bob through a payment channel, Bob's balance doesn't increase until both parties decide to "close" the payment channel. At the time of the payment channel closing, all prior transactions are tallied and one final transaction representing their sum is committed to the blockchain.
 
 In order for a payment channel to close, one of two conditions must be satisfied:
 
