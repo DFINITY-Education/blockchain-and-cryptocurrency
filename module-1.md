@@ -22,7 +22,7 @@ A **blockchain** is a list of records, often referred to as a ledger, that utili
 
 <p align="center"> <i>Source: <a href="https://medium.com/swlh/blockchain-characteristics-and-its-suitability-as-a-technical-solution-bd65fc2c1ad1">Venkat Kasthala, Medium</a></i></p>
 
-Blockchains are unique in their ability to prevent tampering and provide open verification of blocks added to the chain. If a block is modified, its hash changes and all subsequent blocks no longer point to the correct hash, invalidating them. A nefarious actor would need to go though all of the following blocks and re-calculate their hashes to modify the blockchain.
+Blockchains are unique in their ability to prevent tampering and provide open verification of blocks added to the chain. If a block is modified, its hash changes and all subsequent blocks no longer point to the correct hash, invalidating them. A nefarious actor would need to go through all of the following blocks and re-calculate their hashes to modify the blockchain.
 
 However, blockchains use something called **proof-of-work** to prevent this from happening. Proof-of-work uses a form of distributed consensus to verify blocks before they are added to the chain. This slows down the block-verification process (typically requiring anywhere from seconds to minutes per block added to the chain), making it infeasible for a malicious actor to change a block and re-verify the subsequent blocks in the chain.
 
@@ -46,6 +46,6 @@ Several solutions have been proposed to solve this issue. In blockchain terminol
 
 ### Payment Channels
 
-Instead of creating a hard fork that modifies Layer 1, a second solution to cryptocurrency's throughput issue involves creating a **Layer 2** protocol that operates on top of the underlying Layer 1 blockchain. **Payment Channels** are one such Layer 2 protocol that aim to enable faster and more affordable micro transactions, increasing the throughput of the network. Payment Channels allow users to make payments without immediately committing each transaction to the blockchain. 
+Instead of creating a hard fork that modifies Layer 1, a second solution to cryptocurrency's throughput issue involves creating a **Layer 2** protocol that operates on top of the underlying Layer 1 blockchain. **Payment Channels** are one such Layer 2 protocol that aim to enable faster and more affordable microtransactions, increasing the throughput of the network. Payment Channels allow users to make payments without immediately committing each transaction to the blockchain. 
 
 Bitcoin, for instance, uses a payment channel called the **Lightning Network**, which operates by opening an "off-chain" payment channel between two users. These two users can make any number of transactions without the payments ever reaching the main blockchain. Once the users decide to reconcile their activity, they conduct a final closing transaction on the blockchain that represents the net outcome of the series of off-chain payments.  
