@@ -51,7 +51,7 @@ In this module, you will use the command-line interface to "play around" with th
 
 ### Deploying
 
-Let's first begin by deploying this canister to a local network on your computer. Take a look at the [Developer Quick Start Guide](https://sdk.dfinity.org/docs/quickstart/quickstart.html) if you'd like a quick refresher on how to run programs on a locally-deployed IC network. 
+Let's first begin by deploying this canister to a local network on your computer. Take a look at the [Developer Quick Start Guide](https://sdk.dfinity.org/docs/quickstart/quickstart-intro.html) if you'd like a quick refresher on how to run programs on a locally-deployed IC network. 
 
 Follow these steps to deploy your canisters and launch the front end. If you run into any issues, reference the **Quick Start Guide**, linked above,  for a more in-depth walkthrough.
 
